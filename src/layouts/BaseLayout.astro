@@ -1,5 +1,6 @@
 ---
 // src/layouts/BaseLayout.astro
+import '../styles/global.css';
 const { title } = Astro.props;
 ---
 
@@ -11,11 +12,21 @@ const { title } = Astro.props;
         <link rel="icon" type="image/jpeg" href="/image/marin.jpg" />
   </head>
   <body>
-    <nav>這是選單</nav>
+    <!---->
+    <nav class="sticky top-0 z-50 flex justify-between items-center px-8 py-4 bg-white/70 backdrop-blur-md border-b border-slate-200">
+        <div class="text-2xl font-black bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            瑪奇朵的空間
+        </div>
+            <ul class="flex gap-8 font-medium text-slate-600">
+                <li><a href="/" class="hover:text-blue-600 transition-colors">首頁</a></li>
+                <li><a href="/about" class="hover:text-blue-600 transition-colors">關於我</a></li>
+                <!--<li><a href="/posts" class="hover:text-blue-600 transition-colors">文章</a></li>-->
+            </ul>
+    </nav>
     
-    <main>
-      <slot />  </main>
+    <main class="max-w-4xl mx-auto px-6 py-12 min-h-screen prose prose-slate lg:prose-xl">
+        <slot /> </main>
 
-    <footer>這是頁尾</footer>
+    <footer>2026/12/26</footer>
   </body>
 </html>
