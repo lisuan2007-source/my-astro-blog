@@ -1,0 +1,21 @@
+---
+// src/layouts/BaseLayout.astro
+const { title } = Astro.props;
+---
+
+<html>
+    <html lang="zh-TW">
+	<head>
+		<meta charset="utf-8" />
+        <title>{title}</title>
+        <link rel="icon" type="image/jpeg" href="/image/marin.jpg" />
+  </head>
+  <body>
+    <nav>這是選單</nav>
+    
+    <main>
+      <slot />  </main>
+
+    <footer>這是頁尾</footer>
+  </body>
+</html>

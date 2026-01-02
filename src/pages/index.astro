@@ -1,15 +1,10 @@
 ---
-// 這裡寫 JavaScript / TypeScript (只有在開發或編譯時執行)
+// src/pages/index.astro
 const name = "瑪奇朵";
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="zh-TW">
-	<head>
-		<meta charset="utf-8" />
-		<title>瑪奇朵的部落格</title>
-	</head>
-	<body>
+<BaseLayout title="瑪奇朵的部落格">
 		<h1>你好，我是 {name}！</h1>
-		<p>這是我的第一個 Astro 網站。</p>
-	</body>
-</html>
+        <p>這是我的第一個 Astro 網站。</p>
+</BaseLayout>
