@@ -5,8 +5,8 @@ date: "2026-01-03"
 ---
 <div class="text-center my-4">
     <img 
-        src="/image/marin.jpg" 
-        alt="雙眼放光的海夢" 
+        src="/image/marin2.jpg" 
+        alt="海夢" 
         class="w-80 h-80 rounded-full object-cover mx-auto shadow-md border-2 border-slate-200" 
     />
     <h2 class="mt-4 text-slate-600">你好！我是<span class="font-bold">瑪奇朵</span>。
