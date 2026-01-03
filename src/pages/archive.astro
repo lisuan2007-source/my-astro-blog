@@ -1,0 +1,63 @@
+---
+// src/pages/archive.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const allPosts = await Astro.glob('./posts/*.md');
+
+const sortedPosts = allPosts.sort(
+  (a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
+);
+---
+
+<BaseLayout>
+  <div class="max-w-4xl mx-auto w-full px-4">
+    <header class="mb-10">
+      <h1 class="text-3xl font-black text-slate-900">全部文章</h1>
+      <p class="text-slate-400 mt-2">目前共有 {sortedPosts.length} 篇文章</p>
+    </header>
+
+    <div class="flex flex-col gap-6">
+      {sortedPosts.map((post) => (
+        <article class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow relative overflow-hidden group">
+          <div class="flex justify-between items-start mb-4">
+             <a href={post.url} class="group">
+               <h2 class="text-2xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors flex items-center gap-2">
+                 {post.frontmatter.title}
+                 <span class="text-blue-500 opacity-0 group-hover:opacity-100 transition-all text-xl">›</span>
+               </h2>
+             </a>
+          </div>
+
+          <div class="flex flex-wrap gap-4 text-sm text-slate-400 mb-4">
+            <div class="flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              {post.frontmatter.date}
+            </div>
+          </div>
+
+          <p class="text-slate-500 leading-relaxed line-clamp-2">
+            {post.frontmatter.description || "點擊文章查看內容"}
+          </p>
+          
+          <div class="absolute bottom-0 left-0 w-1 h-full bg-blue-500 opacity-0 group-hover:opacity-100 transition-all"></div>
+        </article>
+      ))}
+    </div>
+  </div>
+
+  <div class="mt-12 text-center flex justify-center gap-6">
+    <button 
+        onclick="history.back()" 
+        class="text-slate-400 hover:text-blue-500 transition-colors text-sm font-medium cursor-pointer"
+    >
+    ← 返回上一頁
+    </button>
+
+    <a href="/" class="text-slate-400 hover:text-blue-500 transition-colors text-sm font-medium">
+    返回首頁
+    </a>
+  </div>
+
+</BaseLayout>

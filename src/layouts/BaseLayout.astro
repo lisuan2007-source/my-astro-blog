@@ -1,17 +1,21 @@
 ---
 // src/layouts/BaseLayout.astro
 import '../styles/global.css';
-const { title } = Astro.props;
+const { frontmatter } = Astro.props;
+const title = frontmatter?.title || "未命名文章";
+const date = frontmatter?.date;
+
+const isPost = frontmatter !== undefined;
 ---
 
 <html lang="zh-TW">
   <head>
     <meta charset="utf-8" />
-    <title>{title}</title>
+    <title>瑪奇朵的部落格</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/jpeg" href="/image/marin.jpg" />
   </head>
-  <body>
+  <body class="bg-slate-50">
       <nav class="sticky top-0 z-[100] bg-white border-b border-slate-200">
         <div class="max-w-4xl mx-auto px-6 py-3 flex justify-between items-center h-16 relative z-[110] bg-white">
             <div class="flex items-center gap-2">
@@ -24,6 +28,8 @@ const { title } = Astro.props;
             <div class="flex items-center gap-6">
                 <ul class="hidden md:flex gap-8 font-medium text-slate-600 text-sm">
                     <li><a href="/about" class="hover:text-blue-600 transition-colors">關於我</a></li>
+                    <li><a href="/colophon" class="hover:text-blue-600 transition-colors">關於本站</a></li>
+                    <li><a href="/archive" class="hover:text-blue-600 transition-colors">文章</a></li>
                 </ul>
 
                 <a href="https://github.com" class="hidden md:block text-slate-500 hover:text-slate-900">
@@ -44,9 +50,11 @@ const { title } = Astro.props;
         <div id="mobile-menu" class="md:hidden fixed inset-0 bg-white z-[90] transition-all duration-300 opacity-0 pointer-events-none translate-y-[-10px]">
             <div class="flex flex-col h-full px-10 pt-28 pb-12">
                 <ul class="flex flex-col gap-8 text-slate-700 font-medium text-xl border-b border-slate-100 pb-10">
-                    <li class="flex items-center gap-4">
-                        <a href="/about">關於我</a>
-                    </li>
+
+                    <li class="flex items-center gap-4"><a href="/about">關於我</a></li>
+                    <li class="flex items-center gap-4"><a href="/colophon">關於本站</a></li>
+                    <li class="flex items-center gap-4"><a href="/archive">文章</a></li>
+
                 </ul>
 
                 <div class="mt-auto flex justify-center gap-10 text-slate-400">
@@ -58,13 +66,95 @@ const { title } = Astro.props;
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto px-6 py-12 min-h-screen prose prose-slate lg:prose-xl">
-        <slot /> 
+    <main class="max-w-4xl mx-auto px-6 pt-10 pb-12 min-h-screen">
+        {isPost ? (
+
+        <div class="bg-white shadow-sm border border-slate-200 rounded-lg">
+    
+            <div class="px-8 py-12 md:px-16 md:py-20">
+
+        {isPost && (
+            <header class="mb-6 pb-6 border-b border-slate-100">
+                <h3 class="text-4xl font-black text-slate-900 mb-4">
+                    {title}
+                </h3>
+        
+            {date && (
+                <div class="flex items-center text-slate-400 text-sm font-medium">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+
+                    <time>{date}</time>
+                    <span class="mx-3 text-slate-200">|</span>
+                    <span>文章紀錄</span>
+
+                </div>
+            )}
+            </header>
+        )}
+
+        <article class="prose prose-slate lg:prose-xl max-w-none">
+            <slot />
+
+    <script src="https://giscus.app/client.js"
+        data-repo="lisuan2007-source/my-astro-blog"
+        data-repo-id="R_kgDOQyqjOg"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOQyqjOs4C0h2i"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-TW"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+    </script>
+
+
+      </article>
+
+            </div>
+        </div>
+
+        <div class="mt-12 text-center flex justify-center gap-6">
+            <button 
+                onclick="history.back()" 
+                class="text-slate-400 hover:text-blue-500 transition-colors text-sm font-medium cursor-pointer"
+            >
+            ← 返回上一頁
+            </button>
+
+            <a href="/" class="text-slate-400 hover:text-blue-500 transition-colors text-sm font-medium">
+            返回首頁
+            </a>
+        </div>
+
+        ) : (
+            <slot />
+        )}
     </main>
 
     <footer class="text-center py-10 text-slate-400 text-sm border-t border-slate-100">
-        網站創建日期：2025/12/26，至今已過了<span id="days-count" class="font-bold text-slate-500">?</span>天
+        <p class="mb-2">
+            網站創建日期：2025/12/26，至今已過了 
+            <span id="days-count" class="font-bold text-slate-500">?</span> 天
+        </p>
+
+        <p class="text-xs opacity-80">
+        © 2026 lisuan · 
+        <a href="/LICENSE" class="underline hover:text-blue-500 transition-colors">MIT License</a> · 
+        Assisted by <span class="font-medium">LLM</span>
+        </p>
     </footer>
+    <!--
+    <footer class="text-center py-10 text-slate-400 text-sm border-t border-slate-100">
+        網站創建日期：2025/12/26，至今已過了<span id="days-count" class="font-bold text-slate-500">?</span>天
+    </footer>-->
 
     <script>
     const btn = document.getElementById('menu-btn');
