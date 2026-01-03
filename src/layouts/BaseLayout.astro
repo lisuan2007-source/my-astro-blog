@@ -4,29 +4,89 @@ import '../styles/global.css';
 const { title } = Astro.props;
 ---
 
-<html>
-    <html lang="zh-TW">
-	<head>
-		<meta charset="utf-8" />
-        <title>{title}</title>
-        <link rel="icon" type="image/jpeg" href="/image/marin.jpg" />
+<html lang="zh-TW">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/jpeg" href="/image/marin.jpg" />
   </head>
   <body>
-    <!---->
-    <nav class="sticky top-0 z-50 flex justify-between items-center px-8 py-4 bg-white/70 backdrop-blur-md border-b border-slate-200">
-        <div class="text-2xl font-black bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            瑪奇朵的空間
-        </div>
-            <ul class="flex gap-8 font-medium text-slate-600">
-                <li><a href="/" class="hover:text-blue-600 transition-colors">首頁</a></li>
-                <li><a href="/about" class="hover:text-blue-600 transition-colors">關於我</a></li>
-                <!--<li><a href="/posts" class="hover:text-blue-600 transition-colors">文章</a></li>-->
-            </ul>
-    </nav>
-    
-    <main class="max-w-4xl mx-auto px-6 py-12 min-h-screen prose prose-slate lg:prose-xl">
-        <slot /> </main>
+      <nav class="sticky top-0 z-[100] bg-white border-b border-slate-200">
+        <div class="max-w-4xl mx-auto px-6 py-3 flex justify-between items-center h-16 relative z-[110] bg-white">
+            <div class="flex items-center gap-2">
+                <img src="/image/marin.jpg" class="w-8 h-8 rounded shadow-sm" alt="Logo" />
+                <div class="text-xl font-bold text-slate-800">
+                    <a href="/">瑪奇朵的空間</a>
+                </div>
+            </div>
 
-    <footer>2026/12/26</footer>
+            <div class="flex items-center gap-6">
+                <ul class="hidden md:flex gap-8 font-medium text-slate-600 text-sm">
+                    <li><a href="/about" class="hover:text-blue-600 transition-colors">關於我</a></li>
+                </ul>
+
+                <a href="https://github.com" class="hidden md:block text-slate-500 hover:text-slate-900">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                </a>
+
+                <button id="menu-btn" class="md:hidden p-2 text-slate-600 focus:outline-none">
+                    <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                    <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div> 
+
+        <div id="mobile-menu" class="md:hidden fixed inset-0 bg-white z-[90] transition-all duration-300 opacity-0 pointer-events-none translate-y-[-10px]">
+            <div class="flex flex-col h-full px-10 pt-28 pb-12">
+                <ul class="flex flex-col gap-8 text-slate-700 font-medium text-xl border-b border-slate-100 pb-10">
+                    <li class="flex items-center gap-4">
+                        <a href="/about">關於我</a>
+                    </li>
+                </ul>
+
+                <div class="mt-auto flex justify-center gap-10 text-slate-400">
+                    <a href="https://github.com/lisuan2007-source/my-astro-blog" class="hover:text-slate-900">
+                         <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-12 min-h-screen prose prose-slate lg:prose-xl">
+        <slot /> 
+    </main>
+
+    <footer class="text-center py-10 text-slate-400 text-sm border-t border-slate-100">
+        網站創建日期：2025/12/26
+    </footer>
+
+    <script>
+    const btn = document.getElementById('menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const closeIcon = document.getElementById('close-icon');
+
+    btn?.addEventListener('click', () => {
+        menu?.classList.toggle('opacity-0');
+        menu?.classList.toggle('pointer-events-none');
+        menu?.classList.toggle('translate-y-[-10px]');
+        menu?.classList.toggle('opacity-100');
+        menu?.classList.toggle('pointer-events-auto');
+        menu?.classList.toggle('translate-y-0');
+
+        menuIcon?.classList.toggle('hidden');
+        closeIcon?.classList.toggle('hidden');
+        
+        const isOpen = menu?.classList.contains('opacity-100');
+        document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+    });
+    </script>
+
   </body>
 </html>
