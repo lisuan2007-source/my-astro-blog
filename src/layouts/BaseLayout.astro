@@ -63,7 +63,7 @@ const { title } = Astro.props;
     </main>
 
     <footer class="text-center py-10 text-slate-400 text-sm border-t border-slate-100">
-        網站創建日期：2025/12/26
+        網站創建日期：2025/12/26，至今已過了<span id="days-count" class="font-bold text-slate-500">?</span>天
     </footer>
 
     <script>
@@ -86,6 +86,21 @@ const { title } = Astro.props;
         const isOpen = menu?.classList.contains('opacity-100');
         document.body.style.overflow = isOpen ? 'hidden' : 'auto';
     });
+
+    function initDayCounter() {
+        const start = new Date("2025-12-26");
+        const now = new Date();
+        
+        // 計算差值並轉為天數 (毫秒 / 一天的毫秒數)
+        const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+        
+        const element = document.getElementById('days-count');
+        if (element) {
+            element.innerText = diff;
+        }
+    }
+
+    initDayCounter();
     </script>
 
   </body>
