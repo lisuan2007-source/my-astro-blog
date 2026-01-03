@@ -21,5 +21,10 @@ export const SITE_INFO = {
     inputPosition: "top", 
     theme: "preferred_color_scheme",
     lang: "zh-TW",
-  }
+  },
+
+  github: {
+    username: "lisuan2007-source",
+    repo: "my-astro-blog",
+  },
 };
