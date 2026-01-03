@@ -16,10 +16,16 @@ allPosts.forEach(post => {
 const sortedTags = Object.entries(tagCounts)
 .sort((a, b) => b[1] - a[1]);
 
-// 最新六則文章
-const sortedPosts = allPosts
-  .sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime())
-  .slice(0, 6);
+const pinnedPosts = allPosts.filter(post => post.frontmatter.pinned === true);
+const normalPosts = allPosts.filter(post => post.frontmatter.pinned !== true);
+
+const sortFn = (a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
+
+const sortedPinned = pinnedPosts.sort(sortFn);
+const sortedNormal = normalPosts.sort(sortFn).slice(0, 6); // 普通文章只取 6 則
+
+const sortedPosts = [...sortedPinned, ...sortedNormal];
+
 ---
 <BaseLayout>
   <div class="flex flex-col lg:flex-row gap-8 items-start justify-center">
@@ -33,7 +39,21 @@ const sortedPosts = allPosts
 
       <div class="flex flex-col gap-6">
         {sortedPosts.map((post) => (
-          <article class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow relative overflow-hidden group">
+            <article class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow relative overflow-hidden group">
+
+        <div class="flex justify-between items-start mb-4">
+            <a href={post.url} class="group">
+                <h2 class="text-2xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors flex items-center gap-2">
+                    {post.frontmatter.pinned && (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pin-icon lucide-pin"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/>
+                    </svg>
+                    )}
+                {post.frontmatter.title}
+                </h2>
+            </a>
+        </div>
+
+            <!--
             <div class="flex justify-between items-start mb-4">
                <a href={post.url} class="group">
                  <h2 class="text-2xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors flex items-center gap-2">
@@ -42,7 +62,7 @@ const sortedPosts = allPosts
                  </h2>
                </a>
             </div>
-
+            -->
             <div class="flex flex-wrap gap-4 text-sm text-slate-400 mb-4">
               <div class="flex items-center gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
