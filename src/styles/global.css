@@ -1,2 +1,24 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+.prose img {
+  width: 100%;
+  max-width: 42rem;
+  height: auto;
+  border-radius: 1rem;
+  object-fit: cover;
+  display: block;
+  margin: 2rem auto;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  transition: all 0.3s ease;
+  cursor: zoom-in;
+}
+
+/*圓形控制*/
+.prose img[alt*="circle"] {
+  width: 20rem;
+  height: 20rem;
+  border-radius: 9999px;
+}
+
